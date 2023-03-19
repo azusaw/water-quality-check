@@ -1,5 +1,21 @@
-# get firestore data
-curl http://127.0.0.1:5001/water-quality-check-ab451/us-central1/getFirestore --data 'documentId=0001'
+# water-check-app
 
-# put data to firestore
-curl http://127.0.0.1:5001/water-quality-check-ab451/us-central1/saveFirestore --data 'documentId=0001&userId=1000&ph=8.2&quality=50'
+## Member
+Azusa Watanabe
+
+## Start Firebase server in local
+```commandline
+cd ./firebase
+firebase login
+firebase use --add water-quality-check-ab451
+
+cd ./function
+npm run serve
+```
+
+## Start web app in local
+```commandline
+cd ./vite
+npm install
+npm run server
+```
