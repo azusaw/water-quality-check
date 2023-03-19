@@ -1,38 +1,18 @@
-import { useState } from 'react';
-// import reactLogo from './assets/react.svg';
-import './App.css';
-import data from './mockdata.json';
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
 
-import { useEffect } from 'react';
-import axios from 'axios';
-import LeafletMap from './components/LeafletMap';
-import MapFilter from './components/Filter';
+import Home from "./components/pages/Home";
+import Test from "./components/pages/Test";
 
-const defaultLocation = [56.9, -3.5];
-
-function App() {
-  const [filter, setFilter] = useState({
-    lat: 56.8,
-    long: -3.5,
-    radius: 100,
-  });
-  const [records, setRecords] = useState([]);
-  useEffect(() => {
-    setRecords(data.records);
-
-    // axios.get('http://localhost:3000/records').then((res) => {
-    //   if (res.statusText === 'OK') {
-    //     setRecords(res.data);
-    //   }
-    // });
-  }, []);
-
+const App = () => {
   return (
-    <div className="App">
-      <MapFilter filter={filter} setFilter={setFilter} />
-      <LeafletMap records={records} filter={filter} />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/test" element={<Test />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
-
+};
 export default App;
