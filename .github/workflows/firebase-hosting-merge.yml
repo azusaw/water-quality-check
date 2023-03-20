@@ -10,9 +10,11 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - working-directory: vite
       - uses: actions/checkout@v2
+      - run: npm install
+        working-directory: vite
       - run: npm run build
+        working-directory: vite
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
