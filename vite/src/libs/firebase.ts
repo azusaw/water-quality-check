@@ -1,7 +1,16 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app"
-import { getFirestore, collection, getDocs } from "firebase/firestore/lite"
+import {
+  GeoPoint,
+  Timestamp,
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+} from "firebase/firestore/lite"
+
 import { Point } from "../types/Point"
+import { User } from "../types/User"
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -27,4 +36,22 @@ export const getPoints = async () => {
   const pointsCol = collection(db, "points")
   const pointsSnapshot = await getDocs(pointsCol)
   return pointsSnapshot.docs.map((doc) => doc.data() as Point)
+}
+
+export const savePoint = async (point: Point) => {
+  try {
+    const docRef = await addDoc(collection(db, "points"), {
+      datetime: Timestamp.now(),
+      ph: point.ph,
+      score: point.score,
+      site: new GeoPoint(point.site.latitude, point.site.longitude),
+      user: {
+        id: point.user.id,
+        name: point.user.name,
+      },
+    })
+    console.log("Document written with ID: ", docRef.id)
+  } catch (e) {
+    console.error("Error adding document: ", e)
+  }
 }
