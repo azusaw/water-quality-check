@@ -8,7 +8,7 @@ export default function Home() {
   const [filter, setFilter] = useState({
     lat: 56.8,
     long: -3.5,
-    radius: 100,
+    zoom: 8,
   })
   const [points, setPoints] = useState<Point[]>([])
 

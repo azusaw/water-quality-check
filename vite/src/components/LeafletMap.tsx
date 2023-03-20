@@ -10,8 +10,8 @@ type Props = {
 const SetViewOnFilterChange = ({ filter }) => {
   const map = useMap()
   useEffect(() => {
-    const { lat, long } = filter
-    map.setView([lat, long], map.getZoom())
+    const { lat, long, zoom } = filter
+    map.setView([lat, long], zoom)
   }, [filter])
   return null
 }

@@ -1,60 +1,52 @@
-import { useState } from 'react';
+import { useEffect, useState } from "react"
+import { Slider, Stack } from "@mui/material"
 
 const MapFilter = ({ filter, setFilter }) => {
-  const [lat, setLat] = useState(filter.lat);
-  const [long, setLong] = useState(filter.long);
-  const [radius, setRadius] = useState(filter.radius);
+  const [lat, setLat] = useState<number>(filter.lat)
+  const [long, setLong] = useState<number>(filter.long)
+  const [zoom, setZoom] = useState<number>(filter.zoom)
+
+  useEffect(() => {
+    setFilter({
+      lat,
+      long,
+      zoom,
+    })
+  }, [lat, long, zoom])
 
   return (
-    <div>
-      <label>
-        Lat:
-        <input
-          type={'number'}
-          placeholder={lat.toString()}
-          step={0.1}
-          value={lat}
-          onChange={(e) => {
-            setLat(Number(e.target.value));
-          }}
-        ></input>
-      </label>
-      <label>
-        Long:
-        <input
-          type={'number'}
-          placeholder={long.toString()}
-          value={long}
-          step={0.1}
-          onChange={(e) => {
-            setLong(Number(e.target.value));
-          }}
-        ></input>
-      </label>
-      <label>
-        radius
-        <input
-          type={'range'}
-          min={0}
-          max={100}
-          value={radius}
-          onChange={(e) => setRadius(Number(e.target.value))}
-        ></input>
-        {radius} km
-      </label>
-      <button
-        onClick={() =>
-          setFilter({
-            lat,
-            long,
-            radius,
-          })
-        }
-      >
-        Confirm
-      </button>
-    </div>
-  );
-};
+    <Stack spacing={2} direction="row" alignItems="center">
+      <label>Latitude:</label>
+      <input
+        type={"number"}
+        placeholder={lat.toString()}
+        step={0.1}
+        value={lat}
+        onChange={(e) => {
+          setLat(Number(e.target.value))
+        }}
+      ></input>
+      <label>Longitude:</label>
+      <input
+        type={"number"}
+        placeholder={long.toString()}
+        value={long}
+        step={0.1}
+        onChange={(e) => {
+          setLong(Number(e.target.value))
+        }}
+      ></input>
+      <label>Zoom:</label>
+      <Slider
+        value={zoom}
+        valueLabelDisplay="auto"
+        min={2}
+        max={15}
+        step={0.5}
+        onChange={(e) => setZoom(Number((e.target as HTMLInputElement).value))}
+      />
+    </Stack>
+  )
+}
 
-export default MapFilter;
+export default MapFilter
