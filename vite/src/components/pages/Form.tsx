@@ -1,99 +1,90 @@
-import React, { useEffect, useState } from "react"
-import { Button, Stack, TextField } from "@mui/material"
-import { Point } from "../../types/Point"
-import { User } from "../../types/User"
+import { Button, Grid, Paper, TextField, Typography } from "@mui/material"
+import { useFormik } from "formik"
+import { useNavigate } from "react-router-dom"
 import { savePoint } from "../../libs/firebase"
+import PointEntryFormMap from "../PointEntryFormMap"
 
 export default function Form() {
-  const [point, setPoint] = useState<Point>({
-    id: "",
-    datetime: "",
-    ph: 0,
-    score: 0,
-    site: {
-      latitude: 0,
-      longitude: 0,
+  const navigate = useNavigate()
+  const formik = useFormik({
+    initialValues: {
+      datetime: "",
+      ph: 0,
+      score: 0,
+      latitude: 56.9,
+      longitude: -3.4,
     },
-    user: {
-      id: "dummy",
-      name: "Hoge",
+    onSubmit: (values) => {
+      console.dir(values)
+      const toSubmit = {
+        id: "",
+        datetime: values.datetime,
+        ph: values.ph,
+        score: values.score,
+        site: {
+          latitude: values.latitude,
+          longitude: values.longitude,
+        },
+        user: {
+          id: "dummy",
+          name: "Hoge"
+        }
+      }
+      savePoint(toSubmit)
     },
   })
-
-  useEffect(() => {
-    console.log(point)
-  }, [point])
-
-  const handleInputChange = (value) => {
-    setPoint((prev) => ({
-      ...prev,
-      ...value,
-    }))
+  const position = [formik.values.latitude, formik.values.longitude]
+  const setPosition = ({ lat, lng }) => {
+    formik.setFieldValue("latitude", lat)
+    formik.setFieldValue("longitude", lng)
   }
-
   return (
-    <Stack spacing={2} direction="column" alignItems="center">
-      <Stack spacing={2} direction="row" alignItems="center">
-        <TextField
-          id="latitude"
-          label="Latitude"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={point.site.latitude}
-          onChange={(e) =>
-            handleInputChange({
-              site: {
-                latitude: e.target.value,
-                longitude: point.site.longitude,
-              },
-            })
-          }
-        />
-        <TextField
-          id="longitude"
-          label="Longitude"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={point.site.longitude}
-          onChange={(e) =>
-            handleInputChange({
-              site: {
-                latitude: point.site.latitude,
-                longitude: e.target.value,
-              },
-            })
-          }
-        />
-      </Stack>
-      <Stack spacing={2} direction="row" alignItems="center">
-        <TextField
-          id="score"
-          label="Score"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={point.score}
-          onChange={(e) => handleInputChange({ score: Number(e.target.value) })}
-        />
-        <TextField
-          id="ph"
-          label="Ph"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={point.ph}
-          onChange={(e) => handleInputChange({ ph: Number(e.target.value) })}
-        />
-      </Stack>
-      <Button variant="contained" onClick={() => savePoint(point)}>
-        Submit
-      </Button>
-    </Stack>
+    <form onSubmit={formik.handleSubmit}>
+      <Paper>
+        <Grid
+          display="flex"
+          flexDirection="column"
+          gap="1rem"
+          padding="1rem"
+          minWidth="500px"
+        >
+          <Typography variant="subtitle1" component="h1" textAlign="start">
+            Point entry
+          </Typography>
+          <TextField
+            type="number"
+            label="PH"
+            name="ph"
+            value={formik.values.ph}
+            onChange={formik.handleChange}
+          />
+          <TextField
+            type="number"
+            label="Drinkability score"
+            name="score"
+            value={formik.values.score}
+            onChange={formik.handleChange}
+          />
+          <TextField
+            type="number"
+            label="latitude"
+            name="latitude"
+            value={formik.values.latitude}
+            onChange={formik.handleChange}
+          />
+          <TextField
+            type="number"
+            label="longitude"
+            name="longitude"
+            value={formik.values.longitude}
+            onChange={formik.handleChange}
+          />
+          <PointEntryFormMap position={position} setPosition={setPosition} />
+          <Button onClick={() => navigate(-1)}>BACK</Button>
+          <Button type="submit">SUBMIT</Button>
+        </Grid>
+      </Paper>
+    </form>
   )
 }
+

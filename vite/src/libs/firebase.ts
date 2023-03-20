@@ -26,7 +26,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
-const db = getFirestore(app)
+export const db = getFirestore(app)
 
 // Get a list of points of map from your database
 export const getPoints = async () => {

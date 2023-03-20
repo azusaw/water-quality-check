@@ -12,3 +12,6 @@ export interface Point {
   }
   user: User
 }
+
+export type NewPoint = Omit<Point, "id">
+
