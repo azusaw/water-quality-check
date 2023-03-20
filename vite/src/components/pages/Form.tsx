@@ -3,7 +3,8 @@ import { useFormik } from "formik"
 import { useNavigate } from "react-router-dom"
 import { savePoint } from "../../libs/firebase"
 import PointEntryFormMap from "../PointEntryFormMap"
-import Swal from "sweetalert2/dist/sweetalert2.all.min.js"
+import Swal from "sweetalert2/dist/sweetalert2.js"
+import "sweetalert2/src/sweetalert2.scss"
 
 export default function Form() {
   const navigate = useNavigate()
@@ -27,8 +28,8 @@ export default function Form() {
         },
         user: {
           id: "dummy",
-          name: "Hoge"
-        }
+          name: "Hoge",
+        },
       }
       savePoint(toSubmit)
         .then(() =>
