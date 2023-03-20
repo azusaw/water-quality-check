@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import data from "../../mockdata.json"
 import LeafletMap from "../LeafletMap"
 import MapFilter from "../Filter"
 import { getPoints } from "../../libs/firebase"
+import { Point } from "../../types/Point"
 
 export default function Home() {
   const [filter, setFilter] = useState({
@@ -10,16 +10,20 @@ export default function Home() {
     long: -3.5,
     radius: 100,
   })
-  const [records, setRecords] = useState([])
+  const [points, setPoints] = useState<Point[]>([])
+
   useEffect(() => {
-    setRecords(data.records)
-    getPoints().then((list) => console.log(list))
+    getPoints().then((list) => setPoints(list))
   }, [])
+
+  useEffect(() => {
+    console.log(points)
+  }, [points])
 
   return (
     <div>
       <MapFilter filter={filter} setFilter={setFilter} />
-      <LeafletMap records={records} filter={filter} />
+      <LeafletMap points={points} filter={filter} />
     </div>
   )
 }

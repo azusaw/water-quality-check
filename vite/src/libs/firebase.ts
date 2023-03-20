@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app"
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite"
+import { Point } from "../types/Point"
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,9 +24,7 @@ const db = getFirestore(app)
 
 // Get a list of points of map from your database
 export const getPoints = async () => {
-  const pointsCol = collection(db, "test")
+  const pointsCol = collection(db, "points")
   const pointsSnapshot = await getDocs(pointsCol)
-  const pointsList = pointsSnapshot.docs.map((doc) => doc.data())
-  console.log(pointsList)
-  return pointsList
+  return pointsSnapshot.docs.map((doc) => doc.data() as Point)
 }

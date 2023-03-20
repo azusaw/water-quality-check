@@ -1,5 +1,11 @@
 import { useEffect } from "react"
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet"
+import { Point } from "../types/Point"
+
+type Props = {
+  points: Point[]
+  filter: any
+}
 
 const SetViewOnFilterChange = ({ filter }) => {
   const map = useMap()
@@ -10,10 +16,10 @@ const SetViewOnFilterChange = ({ filter }) => {
   return null
 }
 
-const LeafletMap = ({ records, filter }) => {
+const LeafletMap = ({ points, filter }: Props) => {
   return (
     <MapContainer
-      style={{ height: "200px", width: "500px" }}
+      style={{ height: "500px", width: "800px" }}
       center={[filter.lat ?? 0, filter.long ?? 0]}
       zoom={8}
       scrollWheelZoom={false}
@@ -22,15 +28,24 @@ const LeafletMap = ({ records, filter }) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {records.map((r) => (
-        <Marker key={r._id} position={[r.site.latitude, r.site.longitude]}>
+      {points.map((p) => (
+        <Marker
+          key={`ma-ker-${p.id}`}
+          position={[p.site.latitude, p.site.longitude]}
+        >
           <Popup>
             <p>
-              Drinkability score of <strong>{r.data.score}</strong>
+              <b>Water Info</b>
               <br />
-              <a>Read more...</a>
+              Score: {p.score}
+              <br />
+              Ph: {p.ph}
             </p>
-            <em>Submitted: {r.site.dateSubmitted}</em>
+            <b>Date Info</b>
+            <br />
+            Date: {p.datetime}
+            <br />
+            User: {p.user.name}
           </Popup>
         </Marker>
       ))}
