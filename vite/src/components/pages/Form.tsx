@@ -3,6 +3,7 @@ import { useFormik } from "formik"
 import { useNavigate } from "react-router-dom"
 import { savePoint } from "../../libs/firebase"
 import PointEntryFormMap from "../PointEntryFormMap"
+import Swal from "sweetalert2/dist/sweetalert2.all.min.js"
 
 export default function Form() {
   const navigate = useNavigate()
@@ -15,7 +16,6 @@ export default function Form() {
       longitude: -3.4,
     },
     onSubmit: (values) => {
-      console.dir(values)
       const toSubmit = {
         id: "",
         datetime: values.datetime,
@@ -31,6 +31,23 @@ export default function Form() {
         }
       }
       savePoint(toSubmit)
+        .then(() =>
+          Swal.fire({
+            title: "Thank you!",
+            text: "Your data has been successfully registered.",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 3000,
+          })
+        )
+        .catch((err) =>
+          Swal.fire({
+            title: "Something was wrong..",
+            text: err,
+            icon: "error",
+            confirmButtonText: "close",
+          })
+        )
     },
   })
   const position = [formik.values.latitude, formik.values.longitude]
@@ -80,11 +97,12 @@ export default function Form() {
             onChange={formik.handleChange}
           />
           <PointEntryFormMap position={position} setPosition={setPosition} />
+          <Button type="submit" variant="contained">
+            SUBMIT
+          </Button>
           <Button onClick={() => navigate(-1)}>BACK</Button>
-          <Button type="submit">SUBMIT</Button>
         </Grid>
       </Paper>
     </form>
   )
 }
-

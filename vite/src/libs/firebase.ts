@@ -36,19 +36,15 @@ export const getPoints = async () => {
 }
 
 export const savePoint = async (point: Point) => {
-  try {
-    const docRef = await addDoc(collection(db, "points"), {
-      datetime: Timestamp.now(),
-      ph: point.ph,
-      score: point.score,
-      site: new GeoPoint(point.site.latitude, point.site.longitude),
-      user: {
-        id: point.user.id,
-        name: point.user.name,
-      },
-    })
-    console.log("Document written with ID: ", docRef.id)
-  } catch (e) {
-    console.error("Error adding document: ", e)
-  }
+  const docRef = await addDoc(collection(db, "points"), {
+    datetime: Timestamp.now(),
+    ph: point.ph,
+    score: point.score,
+    site: new GeoPoint(point.site.latitude, point.site.longitude),
+    user: {
+      id: point.user.id,
+      name: point.user.name,
+    },
+  })
+  console.log("Document written with ID: ", docRef.id)
 }
