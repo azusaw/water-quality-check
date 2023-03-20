@@ -28,24 +28,27 @@ const LeafletMap = ({ points, filter }: Props) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {points.map((p) => (
+      {points.map((p, idx) => (
         <Marker
-          key={`ma-ker-${p.id}`}
+          key={`maker-${idx}`}
           position={[p.site.latitude, p.site.longitude]}
         >
           <Popup>
-            <p>
-              <b>Water Info</b>
-              <br />
-              Score: {p.score}
-              <br />
-              Ph: {p.ph}
-            </p>
-            <b>Date Info</b>
+            <b>Water Info</b>
             <br />
-            Date: {p.datetime}
+            Score: {p.score}
+            <br />
+            Ph: {p.ph}
+            <br />
+            <br />
+            <b>Data Info</b>
+            <br />
+            //TODO
+            {/*Date: {p.datetime}*/}
             <br />
             User: {p.user.name}
+            <br />
+            GeoPoint: [{p.site.latitude},{p.site.longitude}]
           </Popup>
         </Marker>
       ))}
