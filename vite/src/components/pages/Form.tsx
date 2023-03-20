@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react"
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material"
 import { useFormik } from "formik"
 import { useNavigate } from "react-router-dom"
-import { savePoint } from "../../libs/firebase"
+import { auth, savePoint } from "../../libs/firebase"
 import PointEntryFormMap from "../PointEntryFormMap"
 import Swal from "sweetalert2/dist/sweetalert2.js"
+import { User } from "../../types/User"
 import "sweetalert2/src/sweetalert2.scss"
 
 export default function Form() {
@@ -27,8 +29,8 @@ export default function Form() {
           longitude: values.longitude,
         },
         user: {
-          id: "dummy",
-          name: "Hoge",
+          id: user.id,
+          name: user.name,
         },
       }
       savePoint(toSubmit)
@@ -56,6 +58,16 @@ export default function Form() {
     formik.setFieldValue("latitude", lat)
     formik.setFieldValue("longitude", lng)
   }
+  const [user, setUser] = useState<User>()
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      user
+        ? setUser({ id: user.uid, name: user.displayName })
+        : navigate("/auth")
+    })
+  }, [])
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <Paper>

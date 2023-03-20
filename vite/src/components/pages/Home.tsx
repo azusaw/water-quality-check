@@ -1,8 +1,8 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { Button, Stack } from "@mui/material"
 
-export default function Form() {
+export default function Home() {
   return (
     <Stack spacing={2} direction="row" alignItems="center">
       <Link to={"/entry"}>

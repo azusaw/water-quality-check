@@ -8,9 +8,8 @@ import {
   addDoc,
   getDocs,
 } from "firebase/firestore/lite"
-
+import { getAuth, signInWithRedirect, GoogleAuthProvider } from "firebase/auth"
 import { Point } from "../types/Point"
-import { User } from "../types/User"
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -27,14 +26,22 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
+export const auth = getAuth()
 
-// Get a list of points of map from your database
+// Redirect login page of google account
+export const loginGoogle = () => {
+  const provider = new GoogleAuthProvider()
+  return signInWithRedirect(auth, provider)
+}
+
+// Get a list of points of map from firestore database
 export const getPoints = async () => {
   const pointsCol = collection(db, "points")
   const pointsSnapshot = await getDocs(pointsCol)
   return pointsSnapshot.docs.map((doc) => doc.data() as Point)
 }
 
+// Save a point information in firestore database
 export const savePoint = async (point: Point) => {
   const docRef = await addDoc(collection(db, "points"), {
     datetime: Timestamp.now(),
