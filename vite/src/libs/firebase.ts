@@ -51,6 +51,7 @@ export const savePoint = async (point: Point) => {
     user: {
       id: point.user.id,
       name: point.user.name,
+      photoUrl: point.user.photoUrl,
     },
   })
   console.log("Document written with ID: ", docRef.id)
