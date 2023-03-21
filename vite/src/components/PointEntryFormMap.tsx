@@ -1,13 +1,8 @@
-import { useState, useRef, useMemo } from "react"
-import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet"
-import { Point } from "../types/Point"
-
-const center = {
-  lat: 51.505,
-  lng: -0.09,
-}
+import { useRef, useMemo, useEffect } from "react"
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet"
 
 function DraggableMarker({ position, setPosition }) {
+  const map = useMap()
   const markerRef = useRef(null)
   const eventHandlers = useMemo(
     () => ({
@@ -20,6 +15,10 @@ function DraggableMarker({ position, setPosition }) {
     }),
     []
   )
+
+  useEffect(() => {
+    map.setView(position, map.getZoom())
+  }, [position])
 
   return (
     <Marker
@@ -55,4 +54,3 @@ const PointEntryFormMap = ({ position, setPosition }) => {
 }
 
 export default PointEntryFormMap
-

@@ -50,7 +50,6 @@ export default function Form() {
         )
     },
   })
-  const position = [formik.values.latitude, formik.values.longitude]
   const setPosition = ({ lat, lng }) => {
     formik.setFieldValue("latitude", lat)
     formik.setFieldValue("longitude", lng)
@@ -66,6 +65,12 @@ export default function Form() {
             photoUrl: user.photoURL,
           })
         : navigate("/auth")
+    })
+  }, [])
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      setPosition({ lat: pos.coords.latitude, lng: pos.coords.longitude })
     })
   }, [])
 
@@ -110,7 +115,10 @@ export default function Form() {
             value={formik.values.longitude}
             onChange={formik.handleChange}
           />
-          <PointEntryFormMap position={position} setPosition={setPosition} />
+          <PointEntryFormMap
+            position={[formik.values.latitude, formik.values.longitude]}
+            setPosition={setPosition}
+          />
           <Button type="submit" variant="contained">
             SUBMIT
           </Button>
