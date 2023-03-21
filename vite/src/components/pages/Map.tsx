@@ -16,10 +16,6 @@ export default function Map() {
     getPoints().then((list) => setPoints(list))
   }, [])
 
-  useEffect(() => {
-    console.log(points)
-  }, [points])
-
   return (
     <div>
       <MapFilter filter={filter} setFilter={setFilter} />

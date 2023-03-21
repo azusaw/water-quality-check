@@ -1,9 +1,9 @@
 import { User } from "./User"
-import { LatLngTuple } from "leaflet"
+import { Timestamp } from "firebase/firestore/lite"
 
 export interface Point {
   id: string
-  datetime: string
+  datetime: Timestamp
   ph: number
   score: number
   site: {
@@ -14,4 +14,3 @@ export interface Point {
 }
 
 export type NewPoint = Omit<Point, "id">
-

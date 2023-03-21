@@ -12,26 +12,23 @@ export default function Form() {
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
-      datetime: "",
-      ph: 0,
-      score: 0,
+      datetime: null,
+      ph: 7.0,
+      score: 5.0,
       latitude: 56.9,
       longitude: -3.4,
     },
     onSubmit: (values) => {
       const toSubmit = {
         id: "",
-        datetime: values.datetime,
+        datetime: null,
         ph: values.ph,
         score: values.score,
         site: {
           latitude: values.latitude,
           longitude: values.longitude,
         },
-        user: {
-          id: user.id,
-          name: user.name,
-        },
+        user: user,
       }
       savePoint(toSubmit)
         .then(() =>
@@ -63,7 +60,11 @@ export default function Form() {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       user
-        ? setUser({ id: user.uid, name: user.displayName })
+        ? setUser({
+            id: user.uid,
+            name: user.displayName,
+            photoUrl: user.photoURL,
+          })
         : navigate("/auth")
     })
   }, [])
@@ -76,7 +77,7 @@ export default function Form() {
           flexDirection="column"
           gap="1rem"
           padding="1rem"
-          minWidth="500px"
+          style={{ width: "90vw", maxWidth: "500px" }}
         >
           <Typography variant="subtitle1" component="h1" textAlign="start">
             Point entry
