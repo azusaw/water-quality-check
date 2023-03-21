@@ -1,7 +1,8 @@
 import { useEffect } from "react"
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet"
+import L from "leaflet"
 import { Point } from "../types/Point"
-import { Avatar, Grid } from "@mui/material"
+import { Avatar, Grid, Stack } from "@mui/material"
 
 type Props = {
   points: Point[]
@@ -16,6 +17,16 @@ const SetViewOnFilterChange = ({ filter }) => {
   }, [filter])
   return null
 }
+
+const safeMaker = new L.Icon({
+  iconUrl: "/pin_blue.svg",
+  iconSize: new L.Point(40, 60),
+})
+
+const dangerMaker = new L.Icon({
+  iconUrl: "/pin_red.svg",
+  iconSize: new L.Point(40, 60),
+})
 
 const LeafletMap = ({ points, filter }: Props) => {
   return (
@@ -33,6 +44,7 @@ const LeafletMap = ({ points, filter }: Props) => {
         <Marker
           key={`maker-${idx}`}
           position={[p.site.latitude, p.site.longitude]}
+          icon={p.score < 5.0 ? dangerMaker : safeMaker}
         >
           <Popup>
             <Grid
@@ -56,14 +68,19 @@ const LeafletMap = ({ points, filter }: Props) => {
                 {p.datetime.toDate().toLocaleString()}
               </Grid>
             </Grid>
-            <Grid container spacing={1} sx={{ padding: 1 }}>
-              <Grid item xs={4}>
-                <Avatar alt={p.user.name} src={p.user.photoUrl} />
-              </Grid>
-              <Grid item xs={8} sx={{ padding: 1 }}>
-                {p.user.name}
-              </Grid>
-            </Grid>
+            <Stack
+              direction={"row"}
+              spacing={1}
+              alignItems="center"
+              sx={{ maxWidth: 200, marginTop: 1 }}
+            >
+              <Avatar
+                alt={p.user.name}
+                src={p.user.photoUrl}
+                style={{ marginRight: 10 }}
+              />
+              {p.user.name}
+            </Stack>
           </Popup>
         </Marker>
       ))}
