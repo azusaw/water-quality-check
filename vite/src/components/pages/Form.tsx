@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material"
 import { useFormik } from "formik"
 import { useNavigate } from "react-router-dom"
-import { auth, savePoint } from "../../libs/firebase"
+import { auth, loginGoogle, savePoint } from "../../libs/firebase"
 import PointEntryFormMap from "../PointEntryFormMap"
 import Swal from "sweetalert2/dist/sweetalert2.js"
 import { User } from "../../types/User"
@@ -57,14 +57,14 @@ export default function Form() {
   const [user, setUser] = useState<User>()
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(async (user) => {
       user
         ? setUser({
             id: user.uid,
             name: user.displayName,
             photoUrl: user.photoURL,
           })
-        : navigate("/auth")
+        : await loginGoogle()
     })
   }, [])
 
