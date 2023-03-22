@@ -1,5 +1,18 @@
 import { useEffect, useState } from "react"
-import { Button, Grid, Paper, TextField, Typography } from "@mui/material"
+import {
+  Box,
+  Button,
+  Chip,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Paper,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material"
 import { useFormik } from "formik"
 import { useNavigate } from "react-router-dom"
 import { auth, loginGoogle, savePoint } from "../../../libs/firebase"
@@ -50,6 +63,7 @@ export default function Form() {
         )
     },
   })
+  const [selectedFields, setSelectedFields] = useState([])
   const setPosition = ({ lat, lng }) => {
     formik.setFieldValue("latitude", lat)
     formik.setFieldValue("longitude", lng)
@@ -87,13 +101,42 @@ export default function Form() {
           <Typography variant="subtitle1" component="h1" textAlign="start">
             Point entry
           </Typography>
-          <TextField
-            type="number"
-            label="PH"
-            name="ph"
-            value={formik.values.ph}
-            onChange={formik.handleChange}
-          />
+          <FormControl>
+            <InputLabel id="measured-values-label">Measured values</InputLabel>
+            <Select
+              labelId="measured-values-label"
+              multiple
+              input={<OutlinedInput label="Measured values" />}
+              value={selectedFields}
+              onChange={(e) => setSelectedFields(e.target.value as string[])}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+            >
+              {[
+                { field: "ph", name: "pH" },
+                { field: "tds", name: "TDS (ppm)" },
+              ].map(({ field, name }) => (
+                <MenuItem key={name} value={field}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          {selectedFields.map((field) => (
+            <TextField
+              type="number"
+              label={field}
+              name={field}
+              value={formik.values[field]}
+              onChange={formik.handleChange}
+            />
+          ))}
           <TextField
             type="number"
             label="Drinkability score"
