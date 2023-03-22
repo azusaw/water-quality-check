@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet"
 import L from "leaflet"
-import { Point } from "../../../types/Point"
+// import { Point } from "../../../types/Point"
 import { Alert, Avatar, Grid, Stack } from "@mui/material"
 import useGetPoints from "../../../hooks/useGetPoints"
 
@@ -57,39 +57,37 @@ const LeafletMap = ({ filter }: Props) => {
               icon={p.score < 5.0 ? dangerMaker : safeMaker}
             >
               <Popup>
-                <Grid
-                  container
-                  spacing={1}
-                  sx={{ minWidth: 150, margin: "0 auto" }}
-                >
-                  <Grid item xs={12}>
-                    <b>Water Info</b>
-                  </Grid>
-                  <Grid item xs={12}>
-                    GeoPoint: [{p.site.latitude},{p.site.longitude}]
-                  </Grid>
-                  <Grid item xs={12}>
-                    DrinkabilityScore: {p.score}
-                  </Grid>
-                  <Grid item xs={12}>
-                    Ph: {p.ph}
-                  </Grid>
-                  <Grid item xs={12}>
-                    {p.datetime.toDate().toLocaleString()}
-                  </Grid>
-                </Grid>
-                <Stack
-                  direction={"row"}
-                  spacing={1}
-                  alignItems="center"
-                  sx={{ maxWidth: 200, marginTop: 1 }}
-                >
-                  <Avatar
-                    alt={p.user.name}
-                    src={p.user.photoUrl}
-                    style={{ marginRight: 10 }}
-                  />
-                  {p.user.name}
+                <Stack spacing={0} direction="column">
+                  <b>Water Info</b>
+                  <span>
+                    Coords: {p.site.latitude.toFixed(2)} °N,{" "}
+                    {p.site.longitude.toFixed(2)} °W
+                  </span>
+                  <span>
+                    Drinkability score:{" "}
+                    <b
+                      style={{
+                        color: p.score < 5.0 ? "indianred" : "royalblue",
+                      }}
+                    >
+                      {p.score.toFixed(1)}
+                    </b>
+                  </span>
+                  <span>Ph: {p.ph}</span>
+                  <em>Date: {p.datetime.toDate().toLocaleString()}</em>
+                  <Stack
+                    direction={"row"}
+                    spacing={1}
+                    alignItems="center"
+                    sx={{ maxWidth: 200, marginTop: 1 }}
+                  >
+                    <Avatar
+                      alt={p.user.name}
+                      src={p.user.photoUrl}
+                      style={{ marginRight: 10 }}
+                    />
+                    {p.user.name}
+                  </Stack>
                 </Stack>
               </Popup>
             </Marker>
