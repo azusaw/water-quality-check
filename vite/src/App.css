@@ -8,7 +8,7 @@
   --bubble-color: hsla(210, 50%, 85%, 1);
 }
 
-.button {
+.bubble-btn {
   border-radius: 8px;
   border: none;
   padding: 10px 20px;
@@ -21,41 +21,17 @@
   transition: all 0.5s;
   text-align: center;
   position:relative;
-  text-transform: uppercase;
-  box-shadow: var(--shadow-color) 2px 2px 22px;
-  z-index: 0;
   overflow: hidden;
 }
 
-#circle {
-  width: 0;
-  height: 0;
-  opacity: 0;
-  line-height: 40px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
-  position: absolute;
-  transition: all .5s ease-Out;
-  top: 20px;
-  left: 70px;
-}
-
-.button:hover #circle {
-  width: 200%;
-  height: 500%;
-  opacity: 1;
-  top: -70px;
-  left: -70px;
-}
-
-.button::after{
+.bubble-btn::after{
   font-weight: 200;
   top: -30px;
   left: -20px;
 }
 
 /* bubbles */
-.button::before {
+.bubble-btn::before {
   content: '';
   pointer-events: none;
   opacity: .6;
@@ -78,4 +54,30 @@
   to {
     transform: translate(0, -66.6%);
   }
+}
+
+#circle {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  line-height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  transition: all .5s ease-Out;
+  top: 20px;
+  left: 70px;
+}
+
+.bubble-btn:hover #circle {
+  width: 200%;
+  height: 500%;
+  opacity: 1;
+  top: -70px;
+  left: -70px;
+}
+
+.MuiTextField-root, .MuiFormControl-root {
+  background-color: #f7fdff;
+  border-radius: 5px;
 }

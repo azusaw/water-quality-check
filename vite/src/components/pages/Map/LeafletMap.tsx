@@ -42,6 +42,8 @@ const LeafletMap = ({ filter }: Props) => {
           height: "500px",
           width: "85vw",
           maxWidth: "800px",
+          margin: "1rem 0",
+          borderRadius: 10,
         }}
         center={[filter.lat ?? 0, filter.long ?? 0]}
         zoom={8}
@@ -77,7 +79,7 @@ const LeafletMap = ({ filter }: Props) => {
                   </Tooltip>
                   <Tooltip title="A pH that strongly deviates from 7 indicates there may be problems with the water">
                     <span>
-                      Ph: {p.ph} <b>i</b>
+                      pH: {p.ph} <b>i</b>
                     </span>
                   </Tooltip>
                   <Typography
@@ -114,4 +116,3 @@ const LeafletMap = ({ filter }: Props) => {
 }
 
 export default LeafletMap
-

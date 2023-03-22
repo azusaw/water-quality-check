@@ -22,12 +22,12 @@ export default function Home() {
           style={{ marginTop: "2rem" }}
         >
           <Link to={"/entry"}>
-            <div className="button">
+            <div className="bubble-btn">
               <div id="circle"></div>Entry Data
             </div>
           </Link>
           <Link to={"/map"}>
-            <div className="button">
+            <div className="bubble-btn">
               <div id="circle"></div>Show Map
             </div>
           </Link>

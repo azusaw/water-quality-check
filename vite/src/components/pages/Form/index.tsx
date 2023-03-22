@@ -89,18 +89,23 @@ export default function Form() {
   }, [])
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <Paper>
+    <form
+      onSubmit={formik.handleSubmit}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+      }}
+    >
+      <Paper style={{ padding: "1rem 0.5rem" }}>
         <Grid
           display="flex"
           flexDirection="column"
           gap="1rem"
           padding="1rem"
-          style={{ width: "90vw", maxWidth: "500px" }}
+          style={{ width: "90vw", maxWidth: "500px", margin: "0 auto" }}
         >
-          <Typography variant="subtitle1" component="h1" textAlign="start">
-            Point entry
-          </Typography>
           <FormControl>
             <InputLabel id="measured-values-label">Measured values</InputLabel>
             <Select
@@ -118,8 +123,8 @@ export default function Form() {
               )}
             >
               {[
-                { field: "ph", name: "pH" },
-                { field: "tds", name: "TDS (ppm)" },
+                { field: "pH", name: "pH" },
+                { field: "TDS", name: "TDS (ppm)" },
               ].map(({ field, name }) => (
                 <MenuItem key={name} value={field}>
                   {name}
@@ -127,7 +132,6 @@ export default function Form() {
               ))}
             </Select>
           </FormControl>
-
           {selectedFields.map((field) => (
             <TextField
               type="number"
@@ -162,13 +166,12 @@ export default function Form() {
             position={[formik.values.latitude, formik.values.longitude]}
             setPosition={setPosition}
           />
-          <Button type="submit" variant="contained">
+          <button type="submit" className="bubble-btn">
             SUBMIT
-          </Button>
+          </button>
           <Button onClick={() => navigate(-1)}>BACK</Button>
         </Grid>
       </Paper>
     </form>
   )
 }
-

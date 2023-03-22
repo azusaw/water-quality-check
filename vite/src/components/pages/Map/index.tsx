@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import LeafletMap from "./LeafletMap"
 import MapFilter from "./Filter"
 import { getPoints } from "../../../libs/firebase"
@@ -18,25 +18,27 @@ export default function Map() {
   return (
     <Container>
       <Stack direction="column" alignItems="center">
-        {/* <MapFilter filter={filter} setFilter={setFilter} /> */}
-        <Typography variant="h1" component="h1">
-          Water quality map
-        </Typography>
-        <p>
+        <p style={{ textAlign: "center" }}>
           Here you can find water quality records. Samples deemed suitable for
-          drinking are marked blue. Note that these samples are collected and
-          tested by a community of volunteers. We can not guarantee the accuracy
-          of these records. Check the water for signs of contamination before
-          drinking and{" "}
+          drinking are marked blue
+          <img
+            src={"/pin_blue.svg"}
+            style={{ display: "inline-block", width: 25, marginBottom: -5 }}
+          />
+          Note that these samples are collected and tested by a community of
+          volunteers. We can not guarantee the accuracy of these records. Check
+          the water for signs of contamination before drinking and{" "}
           <strong>
             always defer to the advice from government officials and water
             maintainance staff regarding the quality of local water sources.
           </strong>
         </p>
+        {/*<MapFilter filter={filter} setFilter={setFilter} />*/}
         <LeafletMap filter={filter} />
-        <Button onClick={() => navigate(-1)}>Go back</Button>
+        <button className="bubble-btn" onClick={() => navigate(-1)}>
+          Go back
+        </button>
       </Stack>
     </Container>
   )
 }
-
