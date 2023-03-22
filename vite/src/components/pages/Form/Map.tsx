@@ -36,7 +36,7 @@ function DraggableMarker({ position, setPosition }) {
   )
 }
 
-const PointEntryFormMap = ({ position, setPosition }) => {
+const Map = ({ position, setPosition }) => {
   return (
     <MapContainer
       style={{ height: "200px", width: "100%" }}
@@ -53,4 +53,5 @@ const PointEntryFormMap = ({ position, setPosition }) => {
   )
 }
 
-export default PointEntryFormMap
+export default Map
+

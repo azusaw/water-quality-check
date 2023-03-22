@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import LeafletMap from "../LeafletMap"
-import MapFilter from "../Filter"
-import { getPoints } from "../../libs/firebase"
-import { Point } from "../../types/Point"
+import LeafletMap from "./LeafletMap"
+import MapFilter from "./Filter"
+import { getPoints } from "../../../libs/firebase"
+import { Point } from "../../../types/Point"
 
 export default function Map() {
   const [filter, setFilter] = useState({
@@ -23,3 +23,4 @@ export default function Map() {
     </div>
   )
 }
+

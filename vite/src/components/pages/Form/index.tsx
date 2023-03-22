@@ -2,10 +2,10 @@ import { useEffect, useState } from "react"
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material"
 import { useFormik } from "formik"
 import { useNavigate } from "react-router-dom"
-import { auth, loginGoogle, savePoint } from "../../libs/firebase"
-import PointEntryFormMap from "../PointEntryFormMap"
+import { auth, loginGoogle, savePoint } from "../../../libs/firebase"
+import Map from "./Map"
 import Swal from "sweetalert2/dist/sweetalert2.js"
-import { User } from "../../types/User"
+import { User } from "../../../types/User"
 import "sweetalert2/src/sweetalert2.scss"
 
 export default function Form() {
@@ -115,7 +115,7 @@ export default function Form() {
             value={formik.values.longitude}
             onChange={formik.handleChange}
           />
-          <PointEntryFormMap
+          <Map
             position={[formik.values.latitude, formik.values.longitude]}
             setPosition={setPosition}
           />
@@ -128,3 +128,4 @@ export default function Form() {
     </form>
   )
 }
+
