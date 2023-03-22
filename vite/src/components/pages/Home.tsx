@@ -1,17 +1,38 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Link } from "react-router-dom"
-import { Button, Stack } from "@mui/material"
+import { Stack } from "@mui/material"
 
 export default function Home() {
   return (
-    <Stack spacing={2} direction="row" alignItems="center">
-      <Link to={"/entry"}>
-        <Button variant="contained">Entry Data</Button>
-      </Link>
-      <Link to={"/map"}>
-        <Button variant="contained">Show Map</Button>
-      </Link>
-    </Stack>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+      }}
+    >
+      <Stack spacing={2} direction="column" alignItems="center">
+        <img src={"/logo_white.svg"} style={{ width: 300, display: "block" }} />
+        <img src={"/h2open.svg"} style={{ width: 300, display: "block" }} />
+        <Stack
+          spacing={2}
+          direction="row"
+          alignItems="center"
+          style={{ marginTop: "2rem" }}
+        >
+          <Link to={"/entry"}>
+            <div className="button">
+              <div id="circle"></div>Entry Data
+            </div>
+          </Link>
+          <Link to={"/map"}>
+            <div className="button">
+              <div id="circle"></div>Show Map
+            </div>
+          </Link>
+        </Stack>
+      </Stack>
+    </div>
   )
 }
-

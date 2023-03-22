@@ -1,43 +1,81 @@
-#root {
-  max-width: 1280px;
+:root {
+  max-width: 860px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: start;
+  line-height: 1.8;
+  font-size: 16px;
+
+  --bubble-color: hsla(210, 50%, 85%, 1);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.button {
+  border-radius: 8px;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: 900;
+  font-family: inherit;
+  color: #fff;
+  background-color: hsl(194, 74%, 46%);
+  cursor: pointer;
+  transition: all 0.5s;
+  text-align: center;
+  position:relative;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-color) 2px 2px 22px;
+  z-index: 0;
+  overflow: hidden;
 }
 
-@keyframes logo-spin {
+#circle {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  line-height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  transition: all .5s ease-Out;
+  top: 20px;
+  left: 70px;
+}
+
+.button:hover #circle {
+  width: 200%;
+  height: 500%;
+  opacity: 1;
+  top: -70px;
+  left: -70px;
+}
+
+.button::after{
+  font-weight: 200;
+  top: -30px;
+  left: -20px;
+}
+
+/* bubbles */
+.button::before {
+  content: '';
+  pointer-events: none;
+  opacity: .6;
+  background:
+      radial-gradient(circle at 20% 35%,  transparent 0,  transparent 2px, var(--bubble-color) 3px, var(--bubble-color) 4px, transparent 4px),
+      radial-gradient(circle at 75% 44%, transparent 0,  transparent 2px, var(--bubble-color) 3px, var(--bubble-color) 4px, transparent 4px),
+      radial-gradient(circle at 46% 52%, transparent 0, transparent 4px, var(--bubble-color) 5px, var(--bubble-color) 6px, transparent 6px);
+  width: 100%;
+  height: 300%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  animation: bubbles 3s linear infinite both;
+}
+
+@keyframes bubbles {
   from {
-    transform: rotate(0deg);
+    transform: translate(0, 0);
   }
   to {
-    transform: rotate(360deg);
+    transform: translate(0, -66.6%);
   }
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
