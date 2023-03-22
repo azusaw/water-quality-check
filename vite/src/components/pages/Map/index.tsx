@@ -3,8 +3,9 @@ import LeafletMap from "./LeafletMap"
 import MapFilter from "./Filter"
 import { getPoints } from "../../../libs/firebase"
 import { Point } from "../../../types/Point"
-import { Button } from "@mui/material"
+import { Button, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
+import { Container, Stack } from "@mui/system"
 
 export default function Map() {
   const navigate = useNavigate()
@@ -15,11 +16,27 @@ export default function Map() {
   })
 
   return (
-    <div>
-      <MapFilter filter={filter} setFilter={setFilter} />
-      <LeafletMap filter={filter} />
-      <Button onClick={() => navigate(-1)}>Go back</Button>
-    </div>
+    <Container>
+      <Stack direction="column" alignItems="center">
+        {/* <MapFilter filter={filter} setFilter={setFilter} /> */}
+        <Typography variant="h1" component="h1">
+          Water quality map
+        </Typography>
+        <p>
+          Here you can find water quality records. Samples deemed suitable for
+          drinking are marked blue. Note that these samples are collected and
+          tested by a community of volunteers. We can not guarantee the accuracy
+          of these records. Check the water for signs of contamination before
+          drinking and{" "}
+          <strong>
+            always defer to the advice from government officials and water
+            maintainance staff regarding the quality of local water sources.
+          </strong>
+        </p>
+        <LeafletMap filter={filter} />
+        <Button onClick={() => navigate(-1)}>Go back</Button>
+      </Stack>
+    </Container>
   )
 }
 
