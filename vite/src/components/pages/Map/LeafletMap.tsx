@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet"
 import L from "leaflet"
 // import { Point } from "../../../types/Point"
-import { Alert, Avatar, Grid, Stack } from "@mui/material"
+import { Alert, Avatar, Grid, Stack, Tooltip, Typography } from "@mui/material"
 import useGetPoints from "../../../hooks/useGetPoints"
 
 type Props = {
@@ -27,6 +27,8 @@ const dangerMaker = new L.Icon({
   iconUrl: "/pin_red.svg",
   iconSize: new L.Point(40, 60),
 })
+
+const InfoModal = ({ title }) => {}
 
 const LeafletMap = ({ filter }: Props) => {
   const { data: points, isError } = useGetPoints()
@@ -57,24 +59,37 @@ const LeafletMap = ({ filter }: Props) => {
               icon={p.score < 5.0 ? dangerMaker : safeMaker}
             >
               <Popup>
-                <Stack spacing={0} direction="column">
+                <Stack spacing={0.5} direction="column">
                   <b>Water Info</b>
-                  <span>
-                    Coords: {p.site.latitude.toFixed(2)} °N,{" "}
-                    {p.site.longitude.toFixed(2)} °W
-                  </span>
-                  <span>
-                    Drinkability score:{" "}
-                    <b
-                      style={{
-                        color: p.score < 5.0 ? "indianred" : "royalblue",
-                      }}
-                    >
-                      {p.score.toFixed(1)}
-                    </b>
-                  </span>
-                  <span>Ph: {p.ph}</span>
-                  <em>Date: {p.datetime.toDate().toLocaleString()}</em>
+
+                  <Tooltip title="This score is calculated based on the available data and ranges from 0 to 10. A score below 5 is considered not suitable for drinking water, whereas a score above 5 is.">
+                    <span>
+                      Drinkability score:{" "}
+                      <b
+                        style={{
+                          color: p.score < 5.0 ? "indianred" : "royalblue",
+                        }}
+                      >
+                        {p.score.toFixed(1)}
+                      </b>
+                      <b> i</b>
+                    </span>
+                  </Tooltip>
+                  <Tooltip title="A pH that strongly deviates from 7 indicates there may be problems with the water">
+                    <span>
+                      Ph: {p.ph} <b>i</b>
+                    </span>
+                  </Tooltip>
+                  <Typography
+                    variant="body2"
+                    fontSize="0.75rem"
+                    sx={{ opacity: "75%" }}
+                  >
+                    {p.site.latitude.toFixed(2)}°N,{" "}
+                    {p.site.longitude.toFixed(2)}°W
+                    <br />
+                    {p.datetime.toDate().toLocaleString()}
+                  </Typography>
                   <Stack
                     direction={"row"}
                     spacing={1}
