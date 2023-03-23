@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import {
+  Alert,
   Box,
   Button,
   Chip,
@@ -22,11 +23,18 @@ import Swal from "sweetalert2/dist/sweetalert2.js"
 import { User } from "../../../types/User"
 import Header from "../../Header"
 import "sweetalert2/src/sweetalert2.scss"
+import { useQuery } from "react-query"
+import deviceService from "../../../services/deviceService"
 
 export default function PointForm() {
   const navigate = useNavigate()
   const [user, setUser] = useState<User>()
   const [selectedFields, setSelectedFields] = useState([])
+  const deviceQuery = useQuery(
+    "device-measurements",
+    () => deviceService.getDeviceMeasurements({ delay: 5000 }),
+    { refetchOnWindowFocus: false, enabled: false }
+  )
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
@@ -94,6 +102,18 @@ export default function PointForm() {
           {({ values, setFieldValue }) => (
             <Form>
               <Stack direction="column" spacing={2}>
+                <Button onClick={() => deviceQuery.refetch()}>
+                  Connect to Device
+                </Button>
+                {deviceQuery.isFetching && (
+                  <Alert severity="info">Searching for device...</Alert>
+                )}
+                {deviceQuery.isSuccess && (
+                  <Alert severity="info">
+                    pH: {deviceQuery.data.ph.toFixed(2)} | TDS:{" "}
+                    {deviceQuery.data.tds}
+                  </Alert>
+                )}
                 <FormControl>
                   <InputLabel id="measured-values-label">
                     Measured values
@@ -177,3 +197,4 @@ export default function PointForm() {
     </Container>
   )
 }
+
