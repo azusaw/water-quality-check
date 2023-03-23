@@ -17,7 +17,7 @@ export default function Map() {
 
   return (
     <Container>
-      <Stack direction="column" alignItems="center">
+      <Stack direction="column" alignItems="center" spacing={1}>
         <p style={{ textAlign: "center" }}>
           Here you can find water quality records. Samples deemed suitable for
           drinking are marked blue
@@ -42,3 +42,4 @@ export default function Map() {
     </Container>
   )
 }
+
