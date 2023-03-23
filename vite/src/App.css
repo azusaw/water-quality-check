@@ -11,17 +11,26 @@
 .bubble-btn {
   border-radius: 8px;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 40px;
   font-size: 1em;
   font-weight: 900;
-  font-family: inherit;
   color: #fff;
-  background-color: hsl(194, 74%, 46%);
+  background-color: #1EA4CC;
   cursor: pointer;
   transition: all 0.5s;
   text-align: center;
   position:relative;
   overflow: hidden;
+}
+
+.icon-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
 }
 
 .bubble-btn::after{

@@ -13,13 +13,13 @@ export default function Home() {
       }}
     >
       <Stack spacing={2} direction="column" alignItems="center">
-        <img src={"/logo_white.svg"} style={{ width: 300, display: "block" }} />
-        <img src={"/h2open.svg"} style={{ width: 300, display: "block" }} />
+        <img src={"/drop.svg"} style={{ width: 250, display: "block" }} />
+        <img src={"/h2open.svg"} style={{ width: 250, display: "block" }} />
         <Stack
           spacing={2}
           direction="row"
           alignItems="center"
-          style={{ marginTop: "2rem" }}
+          style={{ marginTop: "3rem" }}
         >
           <Link to={"/entry"}>
             <div className="bubble-btn">

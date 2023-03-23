@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import LeafletMap from "./LeafletMap"
-import MapFilter from "./Filter"
-import { getPoints } from "../../../libs/firebase"
-import { Point } from "../../../types/Point"
-import { Button, Typography } from "@mui/material"
-import { useNavigate } from "react-router-dom"
 import { Container, Stack } from "@mui/system"
+import Header from "../../Header"
 
 export default function Map() {
-  const navigate = useNavigate()
   const [filter, setFilter] = useState({
     lat: 56.8,
     long: -3.5,
@@ -17,7 +12,10 @@ export default function Map() {
 
   return (
     <Container>
-      <Stack direction="column" alignItems="center" spacing={1}>
+      <Header />
+      <Stack direction="column" alignItems="center">
+        {/*<MapFilter filter={filter} setFilter={setFilter} />*/}
+        <LeafletMap filter={filter} />
         <p style={{ textAlign: "center" }}>
           Here you can find water quality records. Samples deemed suitable for
           drinking are marked blue
@@ -33,13 +31,7 @@ export default function Map() {
             maintainance staff regarding the quality of local water sources.
           </strong>
         </p>
-        {/*<MapFilter filter={filter} setFilter={setFilter} />*/}
-        <LeafletMap filter={filter} />
-        <button className="bubble-btn" onClick={() => navigate(-1)}>
-          Go back
-        </button>
       </Stack>
     </Container>
   )
 }
-

@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   Box,
   Button,
   Chip,
+  Container,
   FormControl,
   Grid,
   InputLabel,
@@ -10,26 +11,17 @@ import {
   OutlinedInput,
   Paper,
   Select as SelectMui,
-  // TextField,
-  Typography,
+  Stack,
 } from "@mui/material"
-import {
-  Autocomplete,
-  TextField,
-  Select,
-  Switch,
-  ToggleButtonGroup,
-} from "formik-mui"
-import { Formik, Form, useFormik, Field } from "formik"
+import { TextField } from "formik-mui"
+import { Formik, Form, Field } from "formik"
 import { useNavigate } from "react-router-dom"
 import { auth, loginGoogle, savePoint } from "../../../libs/firebase"
 import Map from "./Map"
 import Swal from "sweetalert2/dist/sweetalert2.js"
 import { User } from "../../../types/User"
+import Header from "../../Header"
 import "sweetalert2/src/sweetalert2.scss"
-import { formPointSchema } from "../../../types/Point"
-import { toFormikValidationSchema } from "zod-formik-adapter"
-import { Container, Stack } from "@mui/system"
 
 export default function PointForm() {
   const navigate = useNavigate()
@@ -49,16 +41,18 @@ export default function PointForm() {
   }, [])
 
   return (
-    <Container
-      maxWidth="sm"
-      sx={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Paper style={{ padding: "1.5rem", width: "90vw" }}>
+    <Container>
+      <Header />
+      <Paper
+        style={{
+          padding: "3rem 1.5rem",
+          margin: "0 auto",
+          maxWidth: 400,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Formik
           initialValues={{
             tds: 0,
@@ -77,7 +71,6 @@ export default function PointForm() {
               user: user,
             }
             selectedFields.forEach((field) => (toSubmit[field] = values[field]))
-            console.log(toSubmit)
             savePoint(toSubmit)
               .then(() =>
                 Swal.fire({
@@ -98,7 +91,7 @@ export default function PointForm() {
               )
           }}
         >
-          {({ values, setFieldValue, submitForm }) => (
+          {({ values, setFieldValue }) => (
             <Form>
               <Stack direction="column" spacing={2}>
                 <FormControl>
@@ -184,4 +177,3 @@ export default function PointForm() {
     </Container>
   )
 }
-

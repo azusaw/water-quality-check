@@ -6,6 +6,7 @@ import { Alert, Avatar, Grid, Stack, Tooltip, Typography } from "@mui/material"
 import useGetPoints from "../../../hooks/useGetPoints"
 import { Opacity } from "@mui/icons-material"
 import { Container } from "@mui/system"
+import InfoIcon from "@mui/icons-material/Info"
 
 type Props = {
   filter: any
@@ -77,7 +78,14 @@ const LeafletMap = ({ filter }: Props) => {
                         >
                           {p.score.toFixed(1)}
                         </b>
-                        <b> i</b>
+                        <InfoIcon
+                          style={{
+                            width: 20,
+                            height: 20,
+                            display: "inline-block",
+                            color: "#1EA4CC",
+                          }}
+                        />
                       </span>
                     </Tooltip>
                     <Tooltip title="A pH that strongly deviates from 7 indicates there may be problems with the water">
@@ -140,4 +148,3 @@ const LeafletMap = ({ filter }: Props) => {
 }
 
 export default LeafletMap
-
