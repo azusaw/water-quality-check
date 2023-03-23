@@ -16,7 +16,7 @@ import {
   Stack,
 } from "@mui/material"
 import { TextField } from "formik-mui"
-import { Formik, Form, Field } from "formik"
+import { Formik, Form, Field, useFormikContext } from "formik"
 import { useNavigate } from "react-router-dom"
 import { auth, loginGoogle, savePoint } from "../../../libs/firebase"
 import Map from "./Map"
@@ -28,10 +28,23 @@ import { useQuery } from "react-query"
 import deviceService from "../../../services/deviceService"
 import { ArrowCircleDown } from "@mui/icons-material"
 
+// Updates position state to use current device position if available
+const NavigatorUtility = () => {
+  const { setFieldValue } = useFormikContext()
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      setFieldValue("site.latitude", pos.coords.latitude)
+      setFieldValue("site.longitude", pos.coords.longitude)
+    })
+  }, [])
+  return null
+}
+
 export default function PointForm() {
   const navigate = useNavigate()
   const [user, setUser] = useState<User>()
   const [selectedFields, setSelectedFields] = useState([])
+  // Currently a mock service simulating data retrieval from measurement device
   const deviceQuery = useQuery(
     "device-measurements",
     () => deviceService.getDeviceMeasurements({ delay: 1500 }),
@@ -102,6 +115,7 @@ export default function PointForm() {
           >
             {({ values, setFieldValue, handleReset }) => (
               <Form>
+                <NavigatorUtility />
                 <Stack direction="column" spacing={2} alignItems="stretch">
                   <Button onClick={() => deviceQuery.refetch()}>
                     Connect to Device
