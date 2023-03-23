@@ -7,6 +7,7 @@ import {
   Container,
   FormControl,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   OutlinedInput,
@@ -25,6 +26,7 @@ import Header from "../../Header"
 import "sweetalert2/src/sweetalert2.scss"
 import { useQuery } from "react-query"
 import deviceService from "../../../services/deviceService"
+import { ArrowCircleDown } from "@mui/icons-material"
 
 export default function PointForm() {
   const navigate = useNavigate()
@@ -105,15 +107,29 @@ export default function PointForm() {
                 <Button onClick={() => deviceQuery.refetch()}>
                   Connect to Device
                 </Button>
-                {deviceQuery.isFetching && (
+                {deviceQuery.isFetching ? (
                   <Alert severity="info">Searching for device...</Alert>
-                )}
-                {deviceQuery.isSuccess && (
-                  <Alert severity="info">
+                ) : deviceQuery.isSuccess ? (
+                  <Alert
+                    severity="info"
+                    icon={false}
+                    action={
+                      <IconButton
+                        size="small"
+                        onClick={() => {
+                          setSelectedFields(["ph", "tds"])
+                          setFieldValue("ph", deviceQuery.data.ph)
+                          setFieldValue("tds", deviceQuery.data.tds)
+                        }}
+                      >
+                        <ArrowCircleDown color="primary" />
+                      </IconButton>
+                    }
+                  >
                     pH: {deviceQuery.data.ph.toFixed(2)} | TDS:{" "}
                     {deviceQuery.data.tds}
                   </Alert>
-                )}
+                ) : null}
                 <FormControl>
                   <InputLabel id="measured-values-label">
                     Measured values
