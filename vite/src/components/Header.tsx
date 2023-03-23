@@ -19,7 +19,7 @@ export default function Header() {
     >
       {useMediaQuery(theme.breakpoints.up("sm")) ? (
         <>
-          <Grid item xs={12} sm={5}>
+          <Grid item xs={12} sm={6}>
             <img
               src={"/logo_white_wide.png"}
               style={{ width: "100%", maxWidth: 350 }}
