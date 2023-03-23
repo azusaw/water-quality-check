@@ -86,7 +86,19 @@
   left: -70px;
 }
 
+.info-icon {
+  width: 18px !important;
+  display: inline-block;
+  color: #78c4e5;
+  margin-left: 5px;
+}
+
 .MuiTextField-root, .MuiFormControl-root {
   background-color: #f7fdff;
   border-radius: 5px;
+}
+
+.leaflet-popup-close-button {
+  font-size: 24px !important;
+  margin: 5px 8px 0 0;
 }
