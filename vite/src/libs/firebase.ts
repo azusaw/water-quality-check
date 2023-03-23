@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore/lite"
 import { getAuth, signInWithRedirect, GoogleAuthProvider } from "firebase/auth"
 import { Point } from "../types/Point"
+import { v4 as uuidv4 } from "uuid"
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -42,8 +43,9 @@ export const getPoints = async () => {
 }
 
 // Save a point information in firestore database
-export const savePoint = async (point: Point) => {
+export const savePoint = async (point: Omit<Point, "id" | "datetime">) => {
   const docRef = await addDoc(collection(db, "points"), {
+    id: uuidv4(),
     datetime: Timestamp.now(),
     ph: point.ph,
     score: point.score,
@@ -56,3 +58,4 @@ export const savePoint = async (point: Point) => {
   })
   console.log("Document written with ID: ", docRef.id)
 }
+

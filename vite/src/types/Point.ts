@@ -1,10 +1,12 @@
 import { User } from "./User"
 import { Timestamp } from "firebase/firestore/lite"
+import { z } from "zod"
 
 export interface Point {
   id: string
   datetime: Timestamp
-  ph: number
+  tds?: number
+  ph?: number
   score: number
   site: {
     latitude: number
@@ -14,3 +16,17 @@ export interface Point {
 }
 
 export type NewPoint = Omit<Point, "id">
+
+export const formPointSchema = z.object({
+  ph: z.number().min(0).max(14).optional(),
+  score: z.number().min(0).max(10).optional(),
+  description: z.string().min(1).max(500),
+  site: z.object({
+    latitude: z.number().min(-90).max(90),
+    longitude: z.number().min(-90).max(90),
+  }),
+})
+export type FormPointSchema = z.infer<typeof formPointSchema>
+
+// type User = y.InferType<typeof newPointSchema>
+

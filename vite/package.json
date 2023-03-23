@@ -17,6 +17,8 @@
     "firebase": "^9.18.0",
     "firebase-tools": "^11.24.1",
     "formik": "^2.2.9",
+    "formik-mui": "^5.0.0-alpha.0",
+    "formik-mui-x-date-pickers": "^0.0.1",
     "leaflet": "^1.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -24,7 +26,11 @@
     "react-query": "^3.39.3",
     "react-router-dom": "^6.9.0",
     "sass": "^1.59.3",
-    "sweetalert2": "^11.7.3"
+    "sweetalert2": "^11.7.3",
+    "uuid": "^9.0.0",
+    "yup": "^1.0.2",
+    "zod": "^3.21.4",
+    "zod-formik-adapter": "^1.2.0"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.2",
