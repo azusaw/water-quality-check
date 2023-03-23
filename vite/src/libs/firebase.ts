@@ -45,16 +45,9 @@ export const getPoints = async () => {
 // Save a point information in firestore database
 export const savePoint = async (point: Omit<Point, "id" | "datetime">) => {
   const docRef = await addDoc(collection(db, "points"), {
-    id: uuidv4(),
+    ...point,
     datetime: Timestamp.now(),
-    ph: point.ph,
-    score: point.score,
     site: new GeoPoint(point.site.latitude, point.site.longitude),
-    user: {
-      id: point.user.id,
-      name: point.user.name,
-      photoUrl: point.user.photoUrl,
-    },
   })
   console.log("Document written with ID: ", docRef.id)
 }
