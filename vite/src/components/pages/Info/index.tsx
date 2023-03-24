@@ -3,8 +3,14 @@ import { Container } from "@mui/system"
 import Header from "../../Header"
 
 const PreviewBox = ({ title, children }) => (
-  <Grid item xs={6}>
-    <Paper sx={{ padding: "1rem" }}>
+  <Grid item xs={12} sm={6}>
+    <Paper
+      sx={{
+        padding: "1rem",
+        color: "#1c446c",
+      }}
+      elevation={0}
+    >
       <Typography component="h2" variant="h6">
         {title}
       </Typography>
@@ -75,4 +81,3 @@ export default function Info() {
     </>
   )
 }
-
