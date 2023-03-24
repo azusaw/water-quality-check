@@ -93,7 +93,16 @@ const LeafletMap = ({ filter }: Props) => {
                       </Tooltip>
                     </div>
                     <div style={{ display: "flex", alignItems: "center" }}>
-                      pH:&nbsp;&nbsp;<b>{p.ph}</b>
+                      pH:&nbsp;&nbsp;<b>{p.ph ?? "-"}</b>
+                      <Tooltip
+                        title="A pH that strongly deviates from 7 indicates there may be problems with the water"
+                        placement="top"
+                      >
+                        <InfoIcon className="info-icon" />
+                      </Tooltip>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      TDS:&nbsp;&nbsp;<b>{p.tds ?? "-"}</b>
                       <Tooltip
                         title="A pH that strongly deviates from 7 indicates there may be problems with the water"
                         placement="top"
