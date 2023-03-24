@@ -53,7 +53,7 @@ export default function Header() {
               </div>
             </Link>
           </Grid>
-          <Grid item sm={2} sm={1.5}>
+          <Grid item sm={2} md={1.5}>
             <Link to={"/info"}>
               <div className="bubble-btn flexible-btn">
                 <div id="circle"></div>
