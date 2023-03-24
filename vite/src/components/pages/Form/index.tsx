@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { useQuery } from "react-query"
 import {
   Alert,
@@ -40,7 +39,6 @@ const NavigatorUtility = () => {
 }
 
 export default function PointForm() {
-  const navigate = useNavigate()
   const [user, setUser] = useState<User>()
   const [selectedFields, setSelectedFields] = useState([])
   // Currently a mock service simulating data retrieval from measurement device
@@ -68,7 +66,7 @@ export default function PointForm() {
       <Container maxWidth="sm">
         <Paper
           style={{
-            padding: "3rem 2rem",
+            padding: "2rem",
             margin: "0 auto",
           }}
         >
@@ -222,12 +220,13 @@ export default function PointForm() {
                       setFieldValue("site", { latitude: lat, longitude: lng })
                     }}
                   />
-                  <button type="submit" className="bubble-btn">
+                  <button
+                    type="submit"
+                    className="bubble-btn"
+                    style={{ marginTop: "2rem" }}
+                  >
                     SUBMIT
                   </button>
-                  <Button variant="outlined" onClick={() => navigate(-1)}>
-                    BACK
-                  </Button>
                 </Stack>
               </Form>
             )}
