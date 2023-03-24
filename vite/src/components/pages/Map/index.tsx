@@ -13,10 +13,10 @@ export default function Map() {
   return (
     <>
       <Header />
-      <Stack direction="column" alignItems="center">
-        {/*<MapFilter filter={filter} setFilter={setFilter} />*/}
-        <LeafletMap filter={filter} />
-        <Container>
+      <Container maxWidth="md">
+        <Stack direction="column" alignItems="center">
+          {/*<MapFilter filter={filter} setFilter={setFilter} />*/}
+          <LeafletMap filter={filter} />
           <p style={{ textAlign: "center" }}>
             Here you can find water quality records. Samples deemed suitable for
             drinking are marked blue
@@ -32,8 +32,9 @@ export default function Map() {
               maintainance staff regarding the quality of local water sources.
             </strong>
           </p>
-        </Container>
-      </Stack>
+        </Stack>
+      </Container>
     </>
   )
 }
+
