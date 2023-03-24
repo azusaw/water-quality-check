@@ -30,7 +30,16 @@ export const db = getFirestore(app)
 export const auth = getAuth()
 
 // Redirect login page of google account
-export const loginGoogle = () => {
+export const loginGoogle = (setUser) => {
+  // Check auth condition before redirect login page: for iOS
+  if (auth.currentUser) {
+    setUser({
+      id: auth.currentUser.uid,
+      name: auth.currentUser.displayName,
+      photoUrl: auth.currentUser.photoURL,
+    })
+    return
+  }
   const provider = new GoogleAuthProvider()
   return signInWithRedirect(auth, provider)
 }
@@ -43,7 +52,9 @@ export const getPoints = async () => {
 }
 
 // Save a point information in firestore database
-export const savePoint = async (point: Omit<Point, "id" | "datetime">) => {
+export const savePoint = async (
+  point: Omit<Point, "id" | "datetime" | "ph" | "tds">
+) => {
   const docRef = await addDoc(collection(db, "points"), {
     ...point,
     datetime: Timestamp.now(),
@@ -51,4 +62,3 @@ export const savePoint = async (point: Omit<Point, "id" | "datetime">) => {
   })
   console.log("Document written with ID: ", docRef.id)
 }
-

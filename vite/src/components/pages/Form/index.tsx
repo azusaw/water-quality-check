@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useQuery } from "react-query"
 import {
   Alert,
   Box,
@@ -6,7 +8,6 @@ import {
   Chip,
   Container,
   FormControl,
-  Grid,
   IconButton,
   InputLabel,
   MenuItem,
@@ -15,18 +16,16 @@ import {
   Select as SelectMui,
   Stack,
 } from "@mui/material"
-import { TextField } from "formik-mui"
-import { Formik, Form, Field, useFormikContext } from "formik"
-import { useNavigate } from "react-router-dom"
-import { auth, loginGoogle, savePoint } from "../../../libs/firebase"
-import Map from "./Map"
-import Swal from "sweetalert2/dist/sweetalert2.js"
-import { User } from "../../../types/User"
-import Header from "../../Header"
-import "sweetalert2/src/sweetalert2.scss"
-import { useQuery } from "react-query"
-import deviceService from "../../../services/deviceService"
 import { ArrowCircleDown } from "@mui/icons-material"
+import { Formik, Form, Field, useFormikContext } from "formik"
+import { TextField } from "formik-mui"
+import { auth, loginGoogle, savePoint } from "../../../libs/firebase"
+import Swal from "sweetalert2/dist/sweetalert2.js"
+import "sweetalert2/src/sweetalert2.scss"
+import deviceService from "../../../services/deviceService"
+import Header from "../../Header"
+import Map from "./Map"
+import { User } from "../../../types/User"
 
 // Updates position state to use current device position if available
 const NavigatorUtility = () => {
@@ -59,7 +58,7 @@ export default function PointForm() {
             name: user.displayName,
             photoUrl: user.photoURL,
           })
-        : await loginGoogle()
+        : await loginGoogle(setUser)
     })
   }, [])
 
@@ -201,13 +200,13 @@ export default function PointForm() {
                   <Field
                     component={TextField}
                     type="text"
-                    label="latitude"
+                    label="Latitude"
                     name="site.latitude"
                   />
                   <Field
                     component={TextField}
                     type="text"
-                    label="longitude"
+                    label="Longitude"
                     name="site.longitude"
                   />
                   <Button
@@ -238,4 +237,3 @@ export default function PointForm() {
     </>
   )
 }
-
