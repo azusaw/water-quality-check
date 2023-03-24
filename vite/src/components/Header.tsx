@@ -27,7 +27,7 @@ export default function Header() {
           </Grid>
           <Grid item xs={6} sm={2}>
             <Link to={"/"}>
-              <div className="bubble-btn">
+              <div className="bubble-btn flexible-btn">
                 <div id="circle"></div>
                 <HomeIcon sx={{ color: "white" }} />
                 Home
@@ -36,7 +36,7 @@ export default function Header() {
           </Grid>
           <Grid item xs={6} sm={2}>
             <Link to={"/entry"}>
-              <div className="bubble-btn">
+              <div className="bubble-btn flexible-btn">
                 <div id="circle"></div>
                 <AddLocationAltIcon sx={{ color: "white" }} />
                 Entry
@@ -45,7 +45,7 @@ export default function Header() {
           </Grid>
           <Grid item xs={6} sm={2}>
             <Link to={"/map"}>
-              <div className="bubble-btn">
+              <div className="bubble-btn flexible-btn">
                 <div id="circle"></div>
                 <MapIcon sx={{ color: "white" }} />
                 Map
@@ -56,10 +56,18 @@ export default function Header() {
       ) : (
         <>
           <Grid item xs={4}>
-            <img src={"/drop.svg"} style={{ width: "100%" }} />
+            <img
+              src={"/drop.svg"}
+              style={{ width: "100%", maxWidth: 200, paddingRight: 20 }}
+            />
           </Grid>
           <Grid item xs={8} sx={{ color: "white" }}>
-            <Stack spacing={2} direction="row" alignItems="center">
+            <Stack
+              spacing={2}
+              direction="row"
+              alignItems="center"
+              justifyContent="space-evenly"
+            >
               <Link to={"/"}>
                 <div className="bubble-btn icon-btn">
                   <HomeIcon sx={{ width: 30, height: 30 }} />

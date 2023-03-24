@@ -23,6 +23,12 @@
   position:relative;
   overflow: hidden;
 }
+@media screen and (max-width: 800px) {
+  .flexible-btn {
+    padding: 10px 20px;
+  }
+}
+
 
 .icon-btn{
   display: flex;
