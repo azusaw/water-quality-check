@@ -6,6 +6,7 @@ import "./App.css"
 import Home from "./components/pages/Home"
 import Map from "./components/pages/Map"
 import Form from "./components/pages/Form"
+import Info from "./components/pages/Info"
 
 const App = () => {
   const theme = createTheme({
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/map" element={<Map />} />
             <Route path="/entry" element={<Form />} />
+            <Route path="/info" element={<Info />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
@@ -29,3 +31,4 @@ const App = () => {
   )
 }
 export default App
+

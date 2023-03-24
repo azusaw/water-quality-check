@@ -31,8 +31,14 @@ export default function Home() {
               <div id="circle"></div>Show Map
             </div>
           </Link>
+          <Link to={"/info"}>
+            <div className="bubble-btn">
+              <div id="circle"></div>More Information
+            </div>
+          </Link>
         </Stack>
       </Stack>
     </div>
   )
 }
+
