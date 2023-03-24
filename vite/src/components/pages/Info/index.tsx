@@ -43,15 +43,22 @@ export default function Info() {
               </a>
             </Typography>
           </PreviewBox>
-          <PreviewBox title="Title">
+          <PreviewBox title="Community projects">
             <Typography component="p" variant="body2">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus
-              illum odit corrupti quae in excepturi, quisquam possimus deleniti
-              vitae, perferendis repellendus officiis aperiam, exercitationem
-              harum veritatis accusamus quidem pariatur velit!
+              Sanitation and water infrastructure are an important step in
+              securing access to clean water in marginalized communities. These
+              projects can be costly, but by preventing disease and stimulating
+              economic growth they pay off. Several organisations are committed
+              to building such facilities. Visit{" "}
+              <a href="https://thewaterproject.org/impact-opportunities">
+                The Water Project
+              </a>{" "}
+              to get involved in these projects.
             </Typography>
             <Typography component="p" variant="body2">
-              <a href="www.example.com">Read more - External Site</a>
+              <a href="https://thewaterproject.org/impact-opportunities">
+                Read more - The Water Project
+              </a>
             </Typography>
           </PreviewBox>
           <PreviewBox title="Title">
@@ -81,3 +88,4 @@ export default function Info() {
     </>
   )
 }
+
