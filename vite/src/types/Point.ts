@@ -14,6 +14,7 @@ export interface Point {
     lead?: boolean
     mercury?: boolean
   }
+  // -1 BAD | 0 NEUTRAL | 1 GOOD
   score: number
   site: {
     latitude: number
@@ -26,7 +27,14 @@ export type NewPoint = Omit<Point, "id">
 
 export const formPointSchema = z.object({
   ph: z.number().min(0).max(14).optional(),
-  score: z.number().min(0).max(10).optional(),
+  tds: z.number().min(0).max(5000),
+  contaminants: z
+    .object({
+      arsenic: z.boolean().optional(),
+      mercury: z.boolean().optional(),
+      lead: z.boolean().optional(),
+    })
+    .optional(),
   description: z.string().min(1).max(500),
   site: z.object({
     latitude: z.number().min(-90).max(90),
