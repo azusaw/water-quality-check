@@ -7,6 +7,13 @@ export interface Point {
   datetime: Timestamp
   tds?: number
   ph?: number
+  // Contaminants are TRUE if tested positive, FALSE if negative
+  // and undefined if inconclusive or not measured
+  contaminants?: {
+    arsenic?: boolean
+    lead?: boolean
+    mercury?: boolean
+  }
   score: number
   site: {
     latitude: number
@@ -29,4 +36,3 @@ export const formPointSchema = z.object({
 export type FormPointSchema = z.infer<typeof formPointSchema>
 
 // type User = y.InferType<typeof newPointSchema>
-
