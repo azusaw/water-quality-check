@@ -2,6 +2,7 @@ import { Marker, Popup } from "react-leaflet"
 import L from "leaflet"
 import { Avatar, Chip, Stack, Tooltip } from "@mui/material"
 import InfoIcon from "@mui/icons-material/Info"
+import React from "react"
 
 const safeMaker = new L.Icon({
   iconUrl: "/pin_blue.svg",
@@ -33,13 +34,18 @@ export default function MapMarker({ point }) {
         </div>
         <Stack direction="column" sx={{ marginTop: "0.8rem" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
-            Drinkability score:&nbsp;&nbsp;
+            Drinkability:&nbsp;&nbsp;
             <b
               style={{
-                color: p.score < 5.0 ? "indianred" : "royalblue",
+                color:
+                  p.score < 0
+                    ? "indianred"
+                    : p.score > 0
+                    ? "steelblue"
+                    : "yellow",
               }}
             >
-              {p.score.toFixed(1)}
+              {p.score < 0 ? "bad" : p.score > 0 ? "good" : "neutral"}
             </b>
             <Tooltip
               title="This score is calculated based on the available data and ranges from 0 to 10. A score below 5 is considered not suitable for drinking water, whereas a score above 5 is."
@@ -66,23 +72,23 @@ export default function MapMarker({ point }) {
               <InfoIcon className="info-icon" />
             </Tooltip>
           </div>
-          {p.contaminants && (
+          <>
+            <span>Contaminants</span>
             <div style={{ display: "flex", alignItems: "center" }}>
-              Contaminants:&nbsp;&nbsp;
-              {
-                <b>
-                  {Object.values(p.contaminants).length === 0
-                    ? "not tested"
-                    : Object.entries(p.contaminants).map(([key, value]) => (
-                        <Chip
-                          key={key}
-                          color={value ? "error" : "success"}
-                          label={key}
-                          variant="filled"
-                        />
-                      ))}
-                </b>
-              }
+              {!p.contaminants || Object.values(p.contaminants).length === 0 ? (
+                <em>not tested</em>
+              ) : (
+                Object.entries(p.contaminants).map(([key, value]) => (
+                  <Chip
+                    sx={{ marginRight: "3px" }}
+                    size="small"
+                    key={key}
+                    color={value ? "error" : "success"}
+                    label={key}
+                    variant="outlined"
+                  />
+                ))
+              )}
               <Tooltip
                 title="Contaminants marked red were detected in the water, those marked green came back negative. Only contaminants tested for are included."
                 placement="top"
@@ -90,7 +96,7 @@ export default function MapMarker({ point }) {
                 <InfoIcon className="info-icon" />
               </Tooltip>
             </div>
-          )}
+          </>
         </Stack>
         <Stack
           direction={"row"}
@@ -121,3 +127,4 @@ export default function MapMarker({ point }) {
     </Marker>
   )
 }
+
