@@ -48,14 +48,14 @@ export default function MapMarker({ point }) {
               {p.score < 0 ? "bad" : p.score > 0 ? "good" : "neutral"}
             </b>
             <Tooltip
-              title="This score is calculated based on the available data and ranges from 0 to 10. A score below 5 is considered not suitable for drinking water, whereas a score above 5 is."
+              title="Water is considered good if contaminant checks return negative and TDS falls within acceptable range. If any contaminant returns positive, drinkability is bad. "
               placement="top"
             >
               <InfoIcon className="info-icon" />
             </Tooltip>
           </div>
           <div style={{ display: "flex", alignItems: "center" }}>
-            pH:&nbsp;&nbsp;<b>{p.ph ?? "-"}</b>
+            pH:&nbsp;&nbsp;<b>{!("ph" in p) ? "-" : p.ph.toFixed(1)}</b>
             <Tooltip
               title="A pH that strongly deviates from 7 indicates there may be problems with the water"
               placement="top"
