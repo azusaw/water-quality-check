@@ -9,7 +9,7 @@ export interface Point {
   ph?: number
   // Contaminants are TRUE if tested positive, FALSE if negative
   // and undefined if inconclusive or not measured
-  contaminants?: {
+  contaminants: {
     arsenic?: boolean
     lead?: boolean
     mercury?: boolean

@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet"
 import L from "leaflet"
-import { Alert, Avatar, Stack, Tooltip } from "@mui/material"
+import { Alert, Avatar, Chip, Stack, Tooltip } from "@mui/material"
 import { Container } from "@mui/system"
 import InfoIcon from "@mui/icons-material/Info"
 import useGetPoints from "../../../hooks/useGetPoints"
@@ -110,6 +110,33 @@ const LeafletMap = ({ filter }: Props) => {
                         <InfoIcon className="info-icon" />
                       </Tooltip>
                     </div>
+                    {p.contaminants && (
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        Contaminants:&nbsp;&nbsp;
+                        {
+                          <b>
+                            {Object.values(p.contaminants).length === 0
+                              ? "not tested"
+                              : Object.entries(p.contaminants).map(
+                                  ([key, value]) => (
+                                    <Chip
+                                      key={key}
+                                      color={value ? "error" : "success"}
+                                      label={key}
+                                      variant="filled"
+                                    />
+                                  )
+                                )}
+                          </b>
+                        }
+                        <Tooltip
+                          title="Contaminants marked red were detected in the water, those marked green came back negative. Only contaminants tested for are included."
+                          placement="top"
+                        >
+                          <InfoIcon className="info-icon" />
+                        </Tooltip>
+                      </div>
+                    )}
                   </Stack>
                   <Stack
                     direction={"row"}

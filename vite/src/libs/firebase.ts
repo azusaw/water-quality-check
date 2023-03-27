@@ -53,8 +53,7 @@ export const getPoints = async () => {
 
 const getScore = (point: Omit<Point, "id" | "datetime" | "score">): number => {
   // Bad if TDS > 500 or any contaminants are positive
-  if (point.contaminants && Object.values(point.contaminants).includes(true))
-    return -1
+  if (Object.values(point.contaminants).includes(true)) return -1
   if (point.tds > 500) return -1
   // TDS neutral, tests inconclusive or not conducted
   if (point.tds > 100) return 0

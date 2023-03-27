@@ -17,7 +17,7 @@ import {
 } from "@mui/material"
 import { ArrowCircleDown } from "@mui/icons-material"
 import { Formik, Form, Field, useFormikContext } from "formik"
-import { TextField } from "formik-mui"
+import { TextField, Select, CheckboxWithLabel } from "formik-mui"
 import { auth, loginGoogle, savePoint } from "../../../libs/firebase"
 import Swal from "sweetalert2/dist/sweetalert2.js"
 import "sweetalert2/src/sweetalert2.scss"
@@ -74,7 +74,11 @@ export default function PointForm() {
             initialValues={{
               tds: 0,
               ph: 7.0,
-              score: 5.0,
+              contaminants: {
+                arsenic: false,
+                lead: false,
+                mercury: false,
+              },
               site: {
                 latitude: 56.9,
                 longitude: -3.4,
@@ -83,13 +87,22 @@ export default function PointForm() {
             // validationSchema={toFormikValidationSchema(formPointSchema)}
             onSubmit={(values) => {
               const toSubmit = {
-                score: values.score,
                 site: values.site,
+                contaminants: {},
                 user: user,
               }
-              selectedFields.forEach(
-                (field) => (toSubmit[field] = values[field])
-              )
+              selectedFields.forEach((field) => {
+                if (["arsenic", "lead", "mercury"].includes(field)) {
+                  toSubmit.contaminants[field] = values.contaminants[field]
+                } else if (["tds", "ph"].includes(field)) {
+                  toSubmit[field] = values[field]
+                } else {
+                  throw Error(
+                    `Field in selectedField does not match formik field. Field: ${field}`
+                  )
+                }
+              })
+              console.dir(toSubmit)
               return savePoint(toSubmit)
                 .then(() =>
                   Swal.fire({
@@ -127,7 +140,10 @@ export default function PointForm() {
                         <IconButton
                           size="small"
                           onClick={() => {
-                            setSelectedFields(["ph", "tds"])
+                            if (!selectedFields.includes("ph"))
+                              setSelectedFields((sf) => [...sf, "ph"])
+                            if (!selectedFields.includes("tds"))
+                              setSelectedFields((sf) => [...sf, "tds"])
                             setFieldValue("ph", deviceQuery.data.ph)
                             setFieldValue("tds", deviceQuery.data.tds)
                           }}
@@ -165,6 +181,9 @@ export default function PointForm() {
                       {[
                         { field: "ph", name: "pH" },
                         { field: "tds", name: "TDS (ppm)" },
+                        { field: "mercury", name: "Mercury" },
+                        { field: "lead", name: "Lead" },
+                        { field: "arsenic", name: "Arsenic" },
                       ].map(({ field, name }) => (
                         <MenuItem key={name} value={field}>
                           {name}
@@ -189,12 +208,31 @@ export default function PointForm() {
                     />
                   )}
 
-                  <Field
-                    component={TextField}
-                    type="number"
-                    label="Drinkability score"
-                    name="score"
-                  />
+                  {selectedFields.includes("mercury") && (
+                    <Field
+                      component={CheckboxWithLabel}
+                      type="checkbox"
+                      name="contaminants.mercury"
+                      Label={{ label: "mercury" }}
+                    />
+                  )}
+
+                  {selectedFields.includes("lead") && (
+                    <Field
+                      component={CheckboxWithLabel}
+                      type="checkbox"
+                      name="contaminants.lead"
+                      Label={{ label: "lead" }}
+                    />
+                  )}
+                  {selectedFields.includes("arsenic") && (
+                    <Field
+                      component={CheckboxWithLabel}
+                      type="checkbox"
+                      name="contaminants.arsenic"
+                      Label={{ label: "arsenic" }}
+                    />
+                  )}
                   <Field
                     component={TextField}
                     type="text"
