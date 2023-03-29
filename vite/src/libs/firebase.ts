@@ -47,8 +47,8 @@ export const loginGoogle = (agent, setUser) => {
     agent.indexOf("chrome") == -1
   ) {
     Swal.fire({
-      title: "Safari is not supported.",
-      text: "We are so sorry but we don't support data entry from Safari. Try to use another browser.",
+      title: "Safari is not supported",
+      text: "We are so sorry but data entry from Safari is not supported for now. Try to use another browser. The website is under construction and we will support Safari soon!",
       icon: "error",
       showConfirmButton: false,
     })
