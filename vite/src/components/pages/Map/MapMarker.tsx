@@ -14,12 +14,17 @@ const dangerMaker = new L.Icon({
   iconSize: new L.Point(40, 60),
 })
 
+const neutralMaker = new L.Icon({
+  iconUrl: "/pin_yellow.svg",
+  iconSize: new L.Point(40, 60),
+})
+
 export default function MapMarker({ point }) {
   const p = point
   return (
     <Marker
       position={[p.site.latitude, p.site.longitude]}
-      icon={p.score < 0 ? dangerMaker : safeMaker}
+      icon={p.score == 0 ? neutralMaker : p.score < 0 ? dangerMaker : safeMaker}
     >
       <Popup>
         <div
