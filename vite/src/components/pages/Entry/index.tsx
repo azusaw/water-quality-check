@@ -18,7 +18,12 @@ import {
 import { ArrowCircleDown } from "@mui/icons-material"
 import { Formik, Form, Field, useFormikContext } from "formik"
 import { TextField, Select, CheckboxWithLabel } from "formik-mui"
-import { auth, loginGoogle, savePoint } from "../../../libs/firebase"
+import {
+  auth,
+  loginGoogle,
+  savePoint,
+  signOutGoogle,
+} from "../../../libs/firebase"
 import Swal from "sweetalert2/dist/sweetalert2.js"
 import "sweetalert2/src/sweetalert2.scss"
 import deviceService from "../../../services/deviceService"
@@ -40,6 +45,7 @@ const NavigatorUtility = () => {
 
 export default function PointForm() {
   const [user, setUser] = useState<User>()
+  const [agent, setAgent] = useState("")
   const [selectedFields, setSelectedFields] = useState([])
   // Currently a mock service simulating data retrieval from measurement device
   const deviceQuery = useQuery(
@@ -49,16 +55,22 @@ export default function PointForm() {
   )
 
   useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
-      user
-        ? setUser({
-            id: user.uid,
-            name: user.displayName,
-            photoUrl: user.photoURL,
-          })
-        : await loginGoogle(setUser)
-    })
-  }, [])
+    setAgent(window.navigator.userAgent.toLowerCase())
+  }, [window])
+
+  useEffect(() => {
+    if (agent) {
+      auth.onAuthStateChanged(async (user) => {
+        user
+          ? setUser({
+              id: user.uid,
+              name: user.displayName,
+              photoUrl: user.photoURL,
+            })
+          : await loginGoogle(agent, setUser)
+      })
+    }
+  }, [agent])
 
   return (
     <>
@@ -265,6 +277,7 @@ export default function PointForm() {
                   >
                     SUBMIT
                   </button>
+                  {user && <Button onClick={signOutGoogle}>SIGN OUT</Button>}
                 </Stack>
               </Form>
             )}

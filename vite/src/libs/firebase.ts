@@ -1,4 +1,3 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app"
 import {
   GeoPoint,
@@ -10,7 +9,7 @@ import {
 } from "firebase/firestore/lite"
 import { getAuth, signInWithRedirect, GoogleAuthProvider } from "firebase/auth"
 import { Point } from "../types/Point"
-import { v4 as uuidv4 } from "uuid"
+import Swal from "sweetalert2/dist/sweetalert2.js"
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -30,7 +29,7 @@ export const db = getFirestore(app)
 export const auth = getAuth()
 
 // Redirect login page of google account
-export const loginGoogle = (setUser) => {
+export const loginGoogle = (agent, setUser) => {
   // Check auth condition before redirect login page: for iOS
   if (auth.currentUser) {
     setUser({
@@ -40,8 +39,29 @@ export const loginGoogle = (setUser) => {
     })
     return
   }
+
+  // User data can not be collected with Safari
+  if (
+    agent.indexOf("safari") != -1 &&
+    agent.indexOf("crios") == -1 &&
+    agent.indexOf("chrome") == -1
+  ) {
+    Swal.fire({
+      title: "Safari is not supported.",
+      text: "We are so sorry but we don't support data entry from Safari. Try to use another browser.",
+      icon: "error",
+      showConfirmButton: false,
+    })
+    return
+  }
+
   const provider = new GoogleAuthProvider()
   return signInWithRedirect(auth, provider)
+}
+
+export const signOutGoogle = () => {
+  let v = auth.signOut()
+  console.log(v)
 }
 
 // Get a list of points of map from firestore database
