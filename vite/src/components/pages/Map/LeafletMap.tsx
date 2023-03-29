@@ -1,9 +1,7 @@
 import { useEffect } from "react"
-import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet"
-import L from "leaflet"
-import { Alert, Avatar, Chip, Stack, Tooltip } from "@mui/material"
+import { MapContainer, TileLayer, useMap } from "react-leaflet"
+import { Alert } from "@mui/material"
 import { Container } from "@mui/system"
-import InfoIcon from "@mui/icons-material/Info"
 import useGetPoints from "../../../hooks/useGetPoints"
 import MapMarker from "./MapMarker"
 
@@ -20,8 +18,6 @@ const SetViewOnFilterChange = ({ filter }) => {
   return null
 }
 
-const InfoModal = ({ title }) => {}
-
 const LeafletMap = ({ filter }: Props) => {
   const { data: points, isError, isLoading } = useGetPoints()
   return (
@@ -34,7 +30,7 @@ const LeafletMap = ({ filter }: Props) => {
       >
         <MapContainer
           style={{
-            height: "500px",
+            height: "550px",
             width: "100%",
             borderRadius: 10,
             fontFamily: ["Montserrat", "sans-serif"].join(","),

@@ -18,7 +18,7 @@ export default function Header() {
       spacing={2}
       maxWidth="860px"
       margin="0 auto"
-      sx={{ padding: "1.5rem 0.5rem" }}
+      sx={{ padding: "1.5rem 2rem 2rem 0" }}
     >
       {useMediaQuery(theme.breakpoints.up("sm")) ? (
         <>
@@ -104,4 +104,3 @@ export default function Header() {
     </Grid>
   )
 }
-
