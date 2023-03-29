@@ -53,21 +53,12 @@ export const getPoints = async () => {
 
 const getScore = (point: Omit<Point, "id" | "datetime" | "score">): number => {
   // Bad if TDS > 500 or any contaminants are positive
-  if (Object.values(point.contaminants).includes(true)) return -1
-  if (point.tds > 500) return -1
+  if (point.tds > 500 || Object.values(point.contaminants).includes(true))
+    return -1
   // TDS neutral, tests inconclusive or not conducted
   if (point.tds > 100) return 0
   // TDS good, conclusive negative tests
-  if (
-    point.tds <= 100 &&
-    point.contaminants &&
-    point.contaminants.arsenic === false &&
-    point.contaminants.lead === false &&
-    point.contaminants.mercury === false
-  )
-    return 1
-  // Code should not be reached, but if it is we should indicate the quality as bad
-  return -1
+  return 1
 }
 
 // Save a point information in firestore database

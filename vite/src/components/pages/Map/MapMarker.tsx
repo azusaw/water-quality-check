@@ -19,7 +19,7 @@ export default function MapMarker({ point }) {
   return (
     <Marker
       position={[p.site.latitude, p.site.longitude]}
-      icon={p.score < 5.0 ? dangerMaker : safeMaker}
+      icon={p.score < 0 ? dangerMaker : safeMaker}
     >
       <Popup>
         <div
