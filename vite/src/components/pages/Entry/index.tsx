@@ -59,7 +59,7 @@ export default function PointForm() {
   }, [window])
 
   useEffect(() => {
-    if (agent) {
+    agent &&
       auth.onAuthStateChanged(async (user) => {
         user
           ? setUser({
@@ -69,7 +69,6 @@ export default function PointForm() {
             })
           : await loginGoogle(agent, setUser)
       })
-    }
   }, [agent])
 
   return (

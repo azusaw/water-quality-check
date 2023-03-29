@@ -24,18 +24,6 @@ VITE_FIREBASE_APP_ID=1:105XXXXX934:web:6f9XXXXXXXXX36857
 VITE_FIREBASE_MEASUREMENT_ID=G-7CXXXXXJ
 ```
 
-## Start Firebase server in local
-
-```commandline
-cd ./firebase
-firebase login
-firebase use --add water-quality-check-ab451
-
-cd ./function
-npm install
-npm run serve
-```
-
 ## Start web app in local
 
 ```commandline
