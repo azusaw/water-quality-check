@@ -5,7 +5,7 @@ import "./App.css"
 
 import Home from "./components/pages/Home"
 import Map from "./components/pages/Map"
-import Form from "./components/pages/Form"
+import Form from "./components/pages/Entry"
 import Info from "./components/pages/Info"
 
 const App = () => {
@@ -31,4 +31,3 @@ const App = () => {
   )
 }
 export default App
-
